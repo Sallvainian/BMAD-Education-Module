@@ -1,0 +1,64 @@
+# TeachFlow Module Configuration
+module_name: TeachFlow
+module_code: teachflow
+author: Frank
+description: Comprehensive teaching workflow system for managing classroom instruction, behavior management, professional responsibilities, and data analysis
+
+# Module paths
+module_root: "{project-root}/bmad/teachflow"
+installer_path: "{project-root}/bmad/teachflow/_module-installer"
+
+# Component counts
+agents:
+  count: 8
+  core:
+    - instructional-designer
+    - behavior-specialist
+    - professional-writer
+    - data-analyst
+  supporting:
+    - resource-curator
+    - accommodation-specialist
+    - report-generator
+    - goal-tracker
+
+workflows:
+  count: 9
+  list:
+    - lesson-plan-builder
+    - behavior-incident-report
+    - progress-report-generator
+    - unit-planning
+    - assessment-creation
+    - differentiation-strategies
+    - student-goal-setting
+    - classroom-management-plans
+    - parent-communication-templates
+
+tasks:
+  count: 0
+  list: []
+
+# Module-specific settings
+output_folder: "{project-root}/docs/teachflow"
+data_folder: "{module_root}/data"
+templates_folder: "{module_root}/templates"
+
+# Agent delegation rules
+delegation_enabled: true
+delegation_rules:
+  instructional-designer:
+    can_delegate_to:
+      - resource-curator
+      - accommodation-specialist
+      - report-generator
+      - goal-tracker
+  behavior-specialist:
+    can_delegate_to:
+      - report-generator
+  data-analyst:
+    can_delegate_to:
+      - report-generator
+      - goal-tracker
+  professional-writer:
+    can_delegate_to: []
