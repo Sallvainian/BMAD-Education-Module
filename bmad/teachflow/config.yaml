@@ -10,17 +10,20 @@ installer_path: "{project-root}/bmad/teachflow/_module-installer"
 
 # Component counts
 agents:
-  count: 8
+  count: 11
   core:
     - instructional-designer
     - behavior-specialist
     - professional-writer
     - data-analyst
+    - alpha  # Student Support Agent
   supporting:
     - resource-curator
     - accommodation-specialist
-    - report-generator
+    - artifact-generator  # Renamed from report-generator
     - goal-tracker
+    - standards-aligner  # Critical Infrastructure - 3D Learning Intelligence Hub
+    - qa-validation  # Quality gatekeeper for all outputs
 
 workflows:
   count: 9
@@ -28,12 +31,12 @@ workflows:
     - lesson-plan-builder
     - behavior-incident-report
     - progress-report-generator
-    - unit-planning
     - assessment-creation
     - differentiation-strategies
     - student-goal-setting
     - classroom-management-plans
     - parent-communication-templates
+    - student-support-session  # Alpha-specific workflow
 
 tasks:
   count: 0
@@ -49,16 +52,28 @@ delegation_enabled: true
 delegation_rules:
   instructional-designer:
     can_delegate_to:
+      - standards-aligner  # CRITICAL FIRST DELEGATION - provides 3D components
       - resource-curator
       - accommodation-specialist
-      - report-generator
+      - artifact-generator
       - goal-tracker
+      - qa-validation  # Validate lesson quality before delivery
   behavior-specialist:
     can_delegate_to:
-      - report-generator
+      - artifact-generator
+      - qa-validation
   data-analyst:
     can_delegate_to:
-      - report-generator
+      - artifact-generator
       - goal-tracker
+      - qa-validation
   professional-writer:
-    can_delegate_to: []
+    can_delegate_to:
+      - qa-validation
+  alpha:  # Student Support Agent
+    can_delegate_to:
+      - standards-aligner  # CRITICAL - 3D scope retrieval via driving question
+      - resource-curator
+      - artifact-generator
+      - goal-tracker
+      - qa-validation  # CRITICAL - validate academic integrity & age-appropriateness

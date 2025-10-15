@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "ngss": {
+      "command": "node",
+      "args": [
+        "/home/sallvain/dev/mcp-servers/NGSS-MCP/dist/server/index.js"
+      ],
+      "disabled": false
+    }
+  }
+}
