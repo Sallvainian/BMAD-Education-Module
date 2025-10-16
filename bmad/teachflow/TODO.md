@@ -8,7 +8,7 @@ Status: Module brief complete, ready for Phase 0 (NGSS MCP Server)
 
 ## Overview
 
-**Total Agents**: 11 (5 core + 6 supporting)
+**Total Agents**: 14 (5 core + 3 QA specialists + 6 supporting)
 **Total Workflows**: 9 (3 core + 5 feature + 1 utility)
 **Estimated Total Time**: 54-70 hours over 13-16 weeks
 **Module Viability**: 9/10 | Confidence: 85%
@@ -212,27 +212,55 @@ Build the four main teaching agents, three core workflows, and QA agent.
 
 ---
 
-### 2.8 QA/Validation Agent
+### 2.8 QA/Validation System (Coordinator + 3 Specialists)
 **Priority**: 🔴 Critical
-**Estimated Time**: 45-60 minutes
+**Estimated Time**: 3-4 hours total (4 agents)
 **Command**: `/bmad:bmb:workflows:create-agent`
 
-**Role**: Quality gatekeeper for all agents
+**Architecture**: Coordinator pattern with specialist sub-agents
 
-**Scope**:
-- **3D Lesson Validation**: Verify lessons include all three dimensions (SEP, DCI, CCC)
-- **Academic Integrity Check**: Validate Alpha doesn't provide direct homework answers
-- **Standards Alignment Verification**: Confirm outputs match claimed standards
-- **Safety Validation**: Age-appropriate content, no PII, inclusive language
+**Main Agent: QA Guardian** (Coordinator)
+- **Role**: Orchestrates validation workflow across specialist validators
+- **Scope**:
+  - Receives validation requests from other agents
+  - Delegates to appropriate specialist validators
+  - Synthesizes feedback from all validators
+  - Provides final pass/fail + actionable recommendations
+- **Delegates to**: 3D Learning Validator, Pedagogical Quality Validator, Differentiation Validator
+- **Estimated Time**: 45-60 minutes
 
-**Validation Modes**:
-- Automated (rule-based checks)
-- Checklist (guided human review)
-- Spot check (random sampling)
+**Specialist 1: 3D Learning Validator**
+- **Focus**: Authentic 3D learning integration
+- **Validates**:
+  - SEP/DCI/CCC actually integrated (not just checkboxes)
+  - Activities align with claimed practices
+  - CCCs made explicit and visible to students
+  - Depth appropriate to standard (not too shallow/deep)
+- **Estimated Time**: 45-60 minutes
+
+**Specialist 2: Pedagogical Quality Validator**
+- **Focus**: Teaching effectiveness and feasibility
+- **Validates**:
+  - Activities achieve stated learning objectives
+  - Pacing realistic for 50-minute periods
+  - Prerequisite knowledge checks present
+  - Student instructions clear and actionable
+  - Assessments measure what was taught
+  - Modality variety (not all lecture/all group work)
+- **Estimated Time**: 45-60 minutes
+
+**Specialist 3: Differentiation Validator**
+- **Focus**: Inclusive design for all learners
+- **Validates**:
+  - IEP accommodations included
+  - ELL support strategies present
+  - Background knowledge not assumed
+  - Advanced learner extensions provided
+- **Estimated Time**: 45-60 minutes
 
 **Supports**: ALL core agents (validates all outputs before delivery)
 
-**Rationale**: Establishes quality gates early, critical for Alpha safety later.
+**Rationale**: Distributed expertise pattern ensures deep validation in each domain. Coordinator synthesizes holistic quality assessment. Establishes quality gates early, critical for Alpha safety later.
 
 ---
 
@@ -480,7 +508,11 @@ Complete remaining workflows and polish.
 6. Data Analyst agent
 7. Progress Report Generator workflow
 8. Professional Writer agent
-9. QA/Validation Agent
+9. QA/Validation System (4 agents):
+   - QA Guardian (coordinator)
+   - 3D Learning Validator
+   - Pedagogical Quality Validator
+   - Differentiation Validator
 
 **Week 6-8: Supporting Cast**
 10. Resource Curator agent
@@ -524,12 +556,12 @@ After creating each component:
 
 **Phase 0**: ⏳ In progress (separate project - NGSS MCP Server)
 **Phase 1**: ⏳ 0/1 agents created (Standards Aligner)
-**Phase 2**: ⏳ 0/4 agents + 0/3 workflows + 0/1 QA agent
+**Phase 2**: ⏳ 1/4 core agents + 0/3 workflows + 0/4 QA agents (Sentinel ✅)
 **Phase 3**: ⏳ 0/4 supporting agents
 **Phase 4**: ⏳ 0/1 agent (Alpha) + 0/1 workflow
 **Phase 5**: ⏳ 0/5 workflows + polish tasks
 
-**Overall Completion**: 0% (0/11 agents, 0/9 workflows)
+**Overall Completion**: 7% (1/14 agents, 0/9 workflows)
 
 ---
 
@@ -558,10 +590,13 @@ After creating each component:
 - Triple personality + 3D scoping + safety = dedicated architecture
 - Deferred to Phase 4 after patterns proven
 
-### QA/Validation Agent Early
+### QA/Validation Coordinator Pattern
+- Coordinator + 3 specialist validators (vs monolithic agent)
+- Each specialist has deep expertise in one validation domain
+- Enables parallel validation for speed
+- Easier to extend with new validators later
 - Establishes quality gates in Phase 2
 - Critical for Alpha safety later
-- Automated validation catches issues early
 
 ### Local-Only Data Storage
 - Privacy-first, teacher control
