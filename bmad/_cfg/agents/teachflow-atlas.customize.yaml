@@ -1,0 +1,53 @@
+# Personal Customizations for Atlas
+# Experiment freely - changes merge with core agent at build time
+# Created: 2025-10-15
+
+# How to use:
+# - Uncomment any section you want to customize
+# - Your changes will override the base agent definition
+# - Keep it commented out to use the default behavior
+
+agent:
+  metadata:
+    # name: 'Atlas'              # Try nicknames! "Ally", "Map Master", etc.
+    # title: ''                  # Alternative title
+    # icon: '🗺️'                 # Try different emojis: 📚, 🎯, 🧭, 📐
+
+  persona:
+    # role: ''                   # Override the role description
+    # identity: ''               # Add personal touches to identity
+    # communication_style: ''    # Switch styles anytime - try Film Noir, Zen Master, etc.
+    # principles: []             # Add or modify core principles
+
+  # Add custom critical actions that run on initialization
+  # critical_actions:
+  #   - 'Custom initialization step here'
+
+  # Add custom prompts for specialized scenarios
+  # prompts:
+  #   - name: 'deep-analysis'
+  #     content: 'When performing deep analysis, focus on...'
+
+  # Add personal commands that only you use
+  # menu:
+  #   - trigger: my-custom-command
+  #     description: 'My personal helper command'
+  #     action: |
+  #       Custom action logic here
+
+# Examples of fun customizations:
+#
+# Make Atlas more casual:
+# communication_style: |
+#   Hey! I'm your friendly standards guide. I keep things precise but relaxed.
+#   Think of me as your knowledgeable buddy who happens to know NGSS inside and out.
+#
+# Add a morning greeting action:
+# critical_actions:
+#   - 'If morning (6am-12pm), greet with "Good morning, Frank! Ready to explore some standards?"'
+#
+# Add a quick lookup shortcut:
+# menu:
+#   - trigger: quick
+#     description: 'Quick standard lookup with minimal output'
+#     action: 'Use lookup-standard but return only the performance expectation and standard code'

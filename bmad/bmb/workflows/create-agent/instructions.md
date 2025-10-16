@@ -481,4 +481,175 @@ End with enthusiasm:
 <template-output>completion_message</template-output>
 </step>
 
+<step n="10b" goal="Automated installation to BMAD-METHOD" if="agent_type == 'module'" optional="true">
+
+"🚀 Great news! I can automate the installation process for you!"
+
+<action>Auto-detect BMAD-METHOD installation by checking common locations:</action>
+
+Common paths to check:
+- /home/sallvain/dev/tools/BMAD-METHOD
+- {project-root}/../BMAD-METHOD
+- ~/dev/tools/BMAD-METHOD
+- ~/BMAD-METHOD
+
+<check if="BMAD-METHOD found">
+
+"I found your BMAD-METHOD installation! Would you like me to handle the installation automatically?"
+
+**This will:**
+- Copy {{agent_name}} to the BMAD-METHOD source modules
+- Compile the agent to .md format
+- Make it available through the installer
+- Optionally run the installer on this project
+
+<ask>Automate the installation process? [yes/no]</ask>
+
+<check if="yes">
+
+**Step 1: Verify module structure**
+
+<action>Check if module directory exists in BMAD-METHOD:</action>
+<action>Path: {bmad_method_path}/src/modules/{{target_module}}</action>
+
+<check if="module directory not found">
+"Hmm, I don't see the {{target_module}} module in BMAD-METHOD yet. Let me create the structure..."
+
+<action>Create module directory: {bmad_method_path}/src/modules/{{target_module}}</action>
+<action>Create agents directory: {bmad_method_path}/src/modules/{{target_module}}/agents</action>
+<action>Create _module-installer directory: {bmad_method_path}/src/modules/{{target_module}}/_module-installer</action>
+
+"✓ Module structure created"
+</check>
+
+**Step 2: Copy agent to source**
+
+<action>Copy agent YAML file:</action>
+- From: {{module_output_file}}
+- To: {bmad_method_path}/src/modules/{{target_module}}/agents/{{agent_filename}}.agent.yaml
+
+"✓ {{agent_name}} copied to BMAD-METHOD source"
+
+**Step 3: Ensure installer configuration exists**
+
+<action>Check for install-menu-config.yaml in module's _module-installer</action>
+
+<check if="not found">
+"Creating installer menu configuration for {{target_module}}..."
+
+<action>Create {bmad_method_path}/src/modules/{{target_module}}/_module-installer/install-menu-config.yaml:</action>
+
+```yaml
+# {{target_module}} Module Configuration
+
+code: {{target_module}}
+name: "{{module_name}}: {{module_description}}"
+description: "{{brief_module_description}}"
+version: "1.0.0"
+default_selected: false
+
+prompt: "{{module_prompt_message}}"
+```
+
+"✓ Installer configuration created"
+</check>
+
+**Step 4: Compile the agent**
+
+"Compiling {{agent_name}} to executable format..."
+
+<action>Run build command:</action>
+```bash
+cd {bmad_method_path}
+node tools/cli/bmad-cli.js build {{agent_filename}} --directory {project-root}
+```
+
+<check if="build succeeds">
+"✅ {{agent_name}} compiled successfully!"
+<action>Show compilation output path: {project-root}/bmad/{{target_module}}/agents/{{agent_filename}}.md</action>
+</check>
+
+<check if="build fails">
+"⚠️ The compilation encountered an issue. Here's what happened:"
+<action>Display build error output</action>
+
+"Don't worry! You can compile it manually later with:
+```bash
+cd /path/to/BMAD-METHOD
+node tools/cli/bmad-cli.js build {{agent_filename}} --directory {project-root}
+```"
+</check>
+
+**Step 5: Update project manifest**
+
+<action>Check if {{target_module}} is in {project-root}/bmad/_cfg/manifest.yaml</action>
+
+<check if="not in manifest">
+"Adding {{target_module}} to your project manifest..."
+
+<action>Add {{target_module}} to modules list in manifest.yaml</action>
+
+"✓ Module registered in project"
+</check>
+
+**Final Status:**
+
+"🎊 Automated installation complete! Here's what I did:"
+
+- ✅ Copied {{agent_name}} to BMAD-METHOD source
+- ✅ Created/verified module structure
+- ✅ Set up installer configuration
+- ✅ Compiled agent to .md format
+- ✅ Updated project manifest
+
+"{{agent_name}} is now fully installed and ready to use! You can:"
+
+1. **Use it immediately**: Just call {{agent_name}} in this project
+2. **Install to other projects**: Run the BMAD installer and select {{target_module}}
+3. **Share the module**: The source is in BMAD-METHOD for distribution
+
+<ask>Would you like to test {{agent_name}} now? [yes/no]</ask>
+
+<check if="yes">
+<action>Display agent activation command and first steps</action>
+"Try calling: {{agent_name}}
+Then use *help to see all available commands!"
+</check>
+
+</check>
+
+</check>
+
+<check if="BMAD-METHOD not found">
+
+"I couldn't locate your BMAD-METHOD installation automatically."
+
+**Manual installation steps:**
+
+For module agents like {{agent_name}}, you'll need to:
+
+1. **Copy to BMAD-METHOD source:**
+   ```bash
+   cp {{module_output_file}} /path/to/BMAD-METHOD/src/modules/{{target_module}}/agents/
+   ```
+
+2. **Ensure module has installer config:**
+   Check that `/path/to/BMAD-METHOD/src/modules/{{target_module}}/_module-installer/install-menu-config.yaml` exists
+
+3. **Compile the agent:**
+   ```bash
+   cd /path/to/BMAD-METHOD
+   node tools/cli/bmad-cli.js build {{agent_filename}} --directory {project-root}
+   ```
+
+4. **Add to manifest (if needed):**
+   Add `{{target_module}}` to {project-root}/bmad/_cfg/manifest.yaml modules list
+
+"The manual steps are documented above. {{agent_name}} is ready to be installed when you're ready!"
+
+</check>
+
+<template-output>automated_installation</template-output>
+</step>
+
 </workflow>

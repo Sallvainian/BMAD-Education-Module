@@ -1,11 +1,12 @@
 installation:
   version: 6.0.0-alpha.0
-  installDate: '2025-10-14T15:54:09.689Z'
-  lastUpdated: '2025-10-14T15:54:09.689Z'
+  installDate: '2025-10-16T01:44:13.108Z'
+  lastUpdated: '2025-10-16T01:44:13.108Z'
 modules:
   - core
   - bmb
   - bmm
   - cis
+  - teachflow
 ides:
   - claude-code
