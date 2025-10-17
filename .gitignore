@@ -1,6 +1,5 @@
-# Serena MCP session data
-.serena/backups/
-.serena/memories/
+# Serena MCP session data (entire directory)
+.serena/
 
 # Logs
 logs/
